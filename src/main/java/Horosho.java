@@ -16,36 +16,40 @@ import java.util.*;
  * Created by Sasha on 02.04.2016.
  */
 public class Horosho {
+    public static Complex radFunc(double r){
+        return Func.getRadFuncMy(r);
 
+    }
     public static void main(String[] args) {
         Chart2D chart = new Chart2D();
         ITrace2D trace = new Trace2DSimple();
-        trace.setColor(Color.GREEN);
-        ITrace2D trace2 = new Trace2DSimple();
-        trace2.setColor(Color.GRAY);
+        trace.setColor(Color.BLUE);
+        //ITrace2D trace2 = new Trace2DSimple();
+        //trace2.setColor(Color.BLUE);
         chart.addTrace(trace);
-        chart.addTrace(trace2);
-        java.util.List<Point> pointsArg = new ArrayList<Point>(),pointsModule = new ArrayList<Point>();
+        //chart.addTrace(trace2);
+        java.util.List<Point> pointsArg = new ArrayList<Point>(),pointsModule = new ArrayList<Point>(),points = new ArrayList<Point>();
         double maxModule=0;
         double x=0;
         Complex matrica[][] = new Complex[2001][2001];
         for(int i = 0;i<1000;i++){
             x=0+0.001*i;
             try {
-                if(maxModule<Math.sqrt(Math.pow(Func.getRadFunc(x).dReal, 2) + Math.pow(Func.getRadFunc(x).dImaginary, 2)))
-                    maxModule=Math.sqrt(Math.pow(Func.getRadFunc(x).dReal, 2) + Math.pow(Func.getRadFunc(x).dImaginary, 2));
+                if(maxModule<Math.sqrt(Math.pow(radFunc(x).dReal, 2) + Math.pow(radFunc(x).dImaginary, 2)))
+                    maxModule=Math.sqrt(Math.pow(radFunc(x).dReal, 2) + Math.pow(radFunc(x).dImaginary, 2));
                 pointsModule.add(new Point(x,
-                        Math.sqrt(Math.pow(Func.getRadFunc(x).dReal, 2) + Math.pow(Func.getRadFunc(x).dImaginary, 2))));
+                        Math.sqrt(Math.pow(radFunc(x).dReal, 2) + Math.pow(radFunc(x).dImaginary, 2))));
                 pointsArg.add(new Point(x,
-                        Func.getRadFunc(x).getArg()));
-
+                        radFunc(x).getArg()));
+                points.add(new Point(x,radFunc(x)));
+                //System.out.println(radFunc(x).toString());
                 trace.addPoint(x,
-                        Math.sqrt(Math.pow(Func.getRadFunc(x).dReal, 2) + Math.pow(Func.getRadFunc(x).dImaginary, 2)));
-                trace2.addPoint(x, Func.getRadFunc(x).getArg());
+                        Math.sqrt(Math.pow(radFunc(x).dReal, 2) + Math.pow(radFunc(x).dImaginary, 2)));
+                //trace2.addPoint(x, radFunc(x).getArg());
                 //System.out.println(Func.getRadFunc(x).getArg());
             }
             catch (NullPointerException e){
-                System.out.println("Ты лох");
+                System.out.println("asddasasd");
 
             }
         }
@@ -61,19 +65,28 @@ public class Horosho {
 
                 else
                 {
-                    double xyu = alpha;
-                    matrica[j][k]=Func.getRadFunc(pointsModule.get(alpha).getY());
+                //    matrica[j][k]=points.get(alpha).getRadFunc();
+                //}
+
+                matrica[j][k]=points.get(alpha).getRadFunc();
+                    //System.out.println(matrica[j][k]);
                 }
-                colors[j][k] = Math.sqrt(Math.pow(matrica[j][k].dReal, 2) + Math.pow(matrica[j][k].dImaginary,2)) * 255 / maxModule;
+                //colors[j][k] = Math.sqrt(Math.pow(matrica[j][k].dReal, 2) + Math.pow(matrica[j][k].dImaginary,2)) * 255 / maxModule;
+                double t = (Math.atan2(matrica[j][k].dImaginary, matrica[j][k].dReal));
+                if (t >= 0) {
+                    colors[j][k] = t * 255 / Math.PI / 2;
+                } else {
+                    colors[j][k] = (t + 2 * Math.PI) * 255 / Math.PI / 2;
+                }
                 //System.out.println(colors[j][k]);
             }
         }
 
 
         try {
-            ImageIO.write(createImage(colors), "jpg", new File("module.jpg"));
+            ImageIO.write(createImage(colors), "jpg", new File("module1.jpg"));
         } catch (IOException e) {
-            System.out.println("Ты лох");
+            System.out.println("Hi!");
         }
         JFrame frame = new JFrame("MinimalStaticChart");
 

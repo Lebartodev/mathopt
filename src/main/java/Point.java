@@ -4,10 +4,19 @@
 public class Point {
     private double x;
     private double y;
+    private Complex radFunc;
 
     public Point(double x, double y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Point(double x, Complex radFunc) {
+        this.x = x;
+        this.radFunc = radFunc;
+    }
+    public Complex getRadFunc(){
+        return this.radFunc;
     }
 
     public double getX() {

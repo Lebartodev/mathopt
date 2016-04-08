@@ -25,21 +25,25 @@ public double getModel(){
    // Convert complex number to a string ...
     public double getArg(){
         if(dReal>0){
-            return Math.atan(dImaginary/dReal);
+            return checkRes(Math.atan(dImaginary/dReal));
         }
         else
         if(dReal<0&&dImaginary>0){
-            return Math.PI+Math.atan(dImaginary/dReal);
+            return checkRes(Math.PI+Math.atan(dImaginary/dReal));
         }
         else
         if(dReal<0&&dImaginary<0){
-            return -Math.PI+Math.atan(dImaginary/dReal);
+            return checkRes(-Math.PI+Math.atan(dImaginary/dReal));
         }
         if(dReal==0&&dImaginary!=0){
-            return Math.PI/2;
+            if(dImaginary<0)
+            return -Math.PI/2;
+            else
+                return Math.PI/2;
         }
         else
         return 0;
+
     }
     public String toString() {
       if (dImaginary >= 0)
@@ -47,6 +51,16 @@ public double getModel(){
       else
           return dReal + "-" + -dImaginary + "i";
    }
+    private double checkRes(double arg){
+        //if(arg>Math.PI/2+0.01)
+       // return Math.PI/2;
+        //else
+       // if(arg<-(Math.PI/2+0.01))
+        //    return -Math.PI/2;
+        //else
+            return arg;
+
+    }
 
    // ==============================
    // Complex number arithmetic ...

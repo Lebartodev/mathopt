@@ -36,6 +36,25 @@ public class Func {
 
 
     }
+    public static Complex getRadFuncMy(double r){
+        if(r<0.15)
+            return new Complex(0,0);
+        else
+        if(r>=0.15&&r<=0.4) {
+            return new Complex(1000*Math.pow(r,5), 0);
+        }
+        else
+
+        if(r>0.4&&r<=1.0)
+            return new Complex(r,18);
+        else
+        if(r>1)
+            return new Complex(0,0);
+        else return null;
+
+
+
+    }
 
     
 
